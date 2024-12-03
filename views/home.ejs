@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogEra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="./styling/styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Post Management</h1>
+    <p>Current Date and Time: <%= currentDate %></p>
+</header>
+
+<div class="container">
+
+    <!-- New Post Form -->
+    <h2>Create New Post</h2>
+    <form class="post-form" action="/posts" method="POST">
+        <input type="text" name="btitle" placeholder="Post Title" required>
+        <textarea name="bcontent" rows="4" placeholder="Post Content" required></textarea>
+        <button type="submit">Submit Post</button>
+    </form>
+
+    <!-- Display Posts -->
+    <h2>Existing Posts</h2>
+    <% if (posts.length > 0) { %>
+        <ul class="post-list">
+            <% posts.forEach((post, index) => { %>
+                <li class="post-item">
+                    <h3><%= post.title %></h3>
+                    <p><%= post.content %></p>
+                    <p class="date">Posted on: <%= post.date %></p>
+                    <div class="actions">
+                        <!-- Delete Button -->
+                        <form action="/posts/<%= index %>?_method=DELETE" method="POST" style="display:inline;">
+                            <button type="submit" class="delete">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No posts yet. Create your first post above!</p>
+    <% } %>
+
+</div>
+
+</body>
+</html>
